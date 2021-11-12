@@ -1,0 +1,49 @@
+/*---------------------------------------------------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  v1912                                 |
+|   \\  /    A nd           | Website:  www.openfoam.com                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+Build  : _d0846edf-20200506 OPENFOAM=1912 patch=200506
+Arch   : "LSB;label=32;scalar=64"
+Exec   : postProcess -func singleGraph
+Date   : Oct 28 2021
+Time   : 21:10:04
+Host   : ilya-MacBookPro
+PID    : 66922
+I/O    : uncollated
+Case   : /home/ilya/Documents/backup/books/газодинамика/предзачет/flange
+nProcs : 1
+trapFpe: Floating point exception trapping enabled (FOAM_SIGFPE).
+fileModificationChecking : Monitoring run-time modified files using timeStampMaster (fileModificationSkew 10)
+allowSystemOperations : Allowing user-supplied system call operations
+
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+Create time
+
+Create mesh for time = 0
+
+--> FOAM Warning : 
+    From function void Foam::particle::locate(const vector&, const vector*, Foam::label, bool, const Foam::string&)
+    in file particle/particle.C at line 484
+    Particle initialised with a location outside of the mesh when tracking from centre (0.0025 0.05 0.05) of cell 0 to position (0 0.05 0.05)
+Reading set description:
+    line
+
+Time = 0
+
+Reading fields:
+    volScalarField: T
+
+Executing functionObjects
+
+Time = 0.002
+
+Reading fields:
+    volScalarField: T
+
+Executing functionObjects
+
+End
+

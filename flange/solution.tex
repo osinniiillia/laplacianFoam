@@ -1,0 +1,79 @@
+\documentclass{article}      % Specifies the document class
+
+\usepackage{amsmath,amssymb}
+
+\newcommand*\Laplace{\mathop{}\!\mathbin\bigtriangleup}
+\newcommand*\DAlambert{\mathop{}\!\mathbin\Box}
+
+
+                             % The preamble begins here.
+\title{An Example Document}  % Declares the document's title.
+\author{Leslie Lamport}      % Declares the author's name.
+\date{January 21, 1994}      % Deleting this command produces today's date.
+
+\newcommand{\ip}[2]{(#1, #2)}
+                             % Defines \ip{arg1}{arg2} to mean
+                             % (arg1, arg2).
+
+%\newcommand{\ip}[2]{\langle #1 | #2\rangle}
+                             % This is an alternative definition of
+                             % \ip that is commented out.
+
+\begin{document}             % End of preamble and beginning of text.
+
+
+1. Initial task
+\begin{gather}
+\Gamma \Laplace T=\alpha T^{k}, \\ 
+T(x=0)=T_{0}, \\
+T(x=L)=T_{L} 
+\end{gather}
+
+2. Constants\\
+\begin{center}
+k = 0,
+$\alpha = -5$,
+$\Gamma = 2$\\
+L = 3,
+$T_{0} = -4$,
+$T_{L} = 3$\\
+\end{center}
+
+3. Make the task dimless\\
+\begin{center}
+
+$\hat{x} = \frac{x}{L}$ \\
+$T(x) = \hat{T}(\hat{x}) = \hat{T}(\frac{x}{L}) \rightarrow$\\
+$\rightarrow \Laplace T = \frac{\Laplace \hat{T}}{L^{2}} \rightarrow$
+\end{center}
+\begin{gather}
+\Laplace \hat{T} = L^{2} \alpha \hat{T}^{k}, \\
+\hat{T}(\hat{x}=0)=T_{0}, \\
+\hat{T}(\hat{x}=1)=T_{L}
+\end{gather}
+
+4. Linearize the source term
+\begin{center}
+$Q(T) = \alpha T^{k} \approx Q(T^{*}) + \frac{\partial Q}{\partial T} (T-T^{*}) = $\\
+$= \overbrace{Q(T^{*}) - \frac{\partial Q}{\partial T} T^{*}}^{explicit} + \overbrace{\frac{\partial Q}{\partial T} T}^{implicit} = $\\
+$= \alpha (1-k) T^{*k} +  \alpha k T^{*k-1} T$
+\end{center}
+
+5. Write the equation in OpenFOAM notation\\
+(here we use SuSp to increase diagonal dominance)
+\begin{equation}
+laplacian(\Gamma, \hat{T}) = L*L*\alpha*[(1-k)*Foam::pow(\hat{T}, k) + fvm::SuSp(k*\hat{T}^{k-1}, \hat{T})]
+\end{equation} 
+
+6. Find analytical solution to compare with \\
+\begin{center}
+let us take the constants and write down equation (4):
+$$\frac{d^2 \hat{T}}{d^{2} \hat{x}} = \frac{L^{2} \alpha}{\Gamma} \hat{T}^{0} = \frac{L^{2} \alpha}{\Gamma} \rightarrow$$ \\
+$$\hat{T} = \frac{L^{2} \alpha}{2\Gamma}\hat{x}{^2} + c_{1}\hat{x} + c_{2}$$ \\
+$$\hat{T}(\hat{x}=0)=T_{0}, \hat{T}(\hat{x}=1)=T_{L} \rightarrow$$ \\
+$$c_{2} = T_{0}, c_{1} = (T_{L} - T_{0} - \frac{L^{2} \alpha}{2\Gamma})$$
+\end{center}
+\begin{equation}
+\hat{T}_{analytical}(\hat{x}) = \frac{L^{2} \alpha}{2\Gamma}\hat{x}{^2} + (T_{L} - T_{0} - \frac{L^{2} \alpha}{2\Gamma})\hat{x} + T_{0}
+\end{equation}
+\end{document}               % End of document.
