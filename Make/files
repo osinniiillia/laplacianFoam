@@ -1,0 +1,3 @@
+laplacianFoam.C
+
+EXE = ../flange/laplacianFoam
